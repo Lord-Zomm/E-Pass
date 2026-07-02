@@ -408,7 +408,7 @@ input:focus-visible,
 }
 
 .lock-toast {
-  bottom: 109px;
+  bottom: 103px;
 }
 
 .wallet-toast {
@@ -2152,4 +2152,193 @@ input:focus-visible,
 .brand-lockup .brand-logo,
 .brand-lockup>div {
   display: none;
+}
+
+/* =========================================================
+   Compact lock-screen E-Pass widget
+   ========================================================= */
+
+.lock-widget.compact-lock-widget {
+  min-height: 0;
+  height: auto;
+  bottom: 142px;
+  padding: 12px;
+  border-radius: 23px;
+}
+
+.compact-widget-header {
+  min-height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lock-widget-wordmark {
+  display: block;
+  width: auto;
+  height: 22px;
+  max-width: 125px;
+  object-fit: contain;
+  object-position: left center;
+  user-select: none;
+}
+
+/* Individual logo adjustments */
+.lock-widget-wordmark-enterprise {
+  height: 18px;
+  max-width: 105px;
+}
+
+.lock-widget-wordmark-national {
+  height: 21px;
+  max-width: 120px;
+}
+
+.lock-widget-wordmark-alamo {
+  height: 22px;
+  max-width: 108px;
+}
+
+.compact-key-status {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.compact-key-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.compact-key-status.active {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.compact-key-status.active i {
+  background: var(--brand-soft);
+  box-shadow: 0 0 8px var(--brand-soft);
+}
+
+.compact-widget-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 1px 10px;
+}
+
+.compact-widget-content strong {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.compact-widget-content span {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.compact-widget-content small {
+  margin-top: 1px;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 10px;
+}
+
+.lock-widget-controls.compact-controls {
+  gap: 7px;
+  padding-top: 9px;
+}
+
+.lock-widget-controls.compact-controls button {
+  height: 38px;
+  gap: 5px;
+  padding: 0 8px;
+  border-radius: 13px;
+  font-size: 11px;
+}
+
+.lock-widget-controls.compact-controls button:last-child {
+  gap: 3px;
+}
+
+/* Old widget pieces no longer used */
+.compact-lock-widget .widget-topline,
+.compact-lock-widget .widget-main,
+.compact-lock-widget .widget-key-state,
+.compact-lock-widget .live-pill {
+  display: none;
+}
+
+/* Lock-screen rental lifecycle action */
+
+.compact-widget-content-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 1px 10px;
+}
+
+.compact-widget-content-row .compact-widget-content {
+  min-width: 0;
+  padding: 0;
+}
+
+.lock-rental-action {
+  width: 88px;
+  min-height: 48px;
+  padding: 7px 9px;
+  border: 1px solid color-mix(in srgb,
+      var(--brand-soft) 42%,
+      rgba(255, 255, 255, 0.16));
+  border-radius: 15px;
+  background: color-mix(in srgb,
+      var(--brand-accent) 42%,
+      rgba(255, 255, 255, 0.08));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 7px 16px rgba(0, 0, 0, 0.12);
+}
+
+.lock-rental-action span {
+  color: inherit;
+  white-space: nowrap;
+}
+
+.lock-rental-action.stage-1 {
+  background: color-mix(in srgb,
+      var(--brand-accent) 36%,
+      rgba(255, 255, 255, 0.08));
+}
+
+.lock-rental-action.stage-2 {
+  background: rgba(196, 94, 29, 0.7);
+  border-color: rgba(255, 184, 126, 0.38);
+}
+
+.lock-rental-action.stage-3 {
+  color: rgba(255, 255, 255, 0.48);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  cursor: default;
 }

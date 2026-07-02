@@ -230,6 +230,7 @@ function LockScreen({
   onToggleLock,
   onToggleEngine,
   onOpenWallet,
+  onAdvanceStage,
   stage,
   toast,
 }) {
@@ -240,6 +241,20 @@ function LockScreen({
     'Rental complete · Tell us how we did',
   ][stage];
 
+  const rentalActionCopy = [
+  'Check In',
+  'Manage',
+  'Return',
+  'Complete',
+][stage];
+
+const rentalActionIcon = [
+  'check',
+  'key',
+  'rotate',
+  'check',
+][stage];
+
   return (
     <main className="lock-screen">
       <div className="wallpaper-glow glow-one" />
@@ -248,47 +263,76 @@ function LockScreen({
       <StatusBar time={now.time} />
 
       <section className="lock-date-time" aria-label="Current time">
-        <div className="lock-date">{now.longDate}</div>
-        <div className="lock-time">{now.time}</div>
-      </section>
+              <div className="lock-date">{now.longDate}</div>
+              <div className="lock-time">{now.time}</div>
+            </section>
 
-      <section className="lock-widget" onClick={onOpenWallet} role="button" tabIndex="0" onKeyDown={(event) => event.key === 'Enter' && onOpenWallet()}>
-        <div className="widget-topline">
-          <div className="widget-brand">
-            <BrandLogo theme={theme} brand={brand} compact />
-            <span>{brand} E-Pass</span>
-          </div>
-          <span className="live-pill">LIVE</span>
+            <section
+        className="lock-widget compact-lock-widget"
+        onClick={onOpenWallet}
+        role="button"
+        tabIndex="0"
+        onKeyDown={(event) => event.key === 'Enter' && onOpenWallet()}
+        >
+        <div className="compact-widget-header">
+          <img
+            className={`lock-widget-wordmark lock-widget-wordmark-${brand.toLowerCase()}`}
+            src={theme.logo}
+            alt={`${brand} logo`}
+          />
+
+          <span className={`compact-key-status ${stage > 0 && stage < 3 ? 'active' : ''}`}>
+            <i />
+            {stage > 0 && stage < 3 ? 'Key Active' : 'Ready'}
+          </span>
         </div>
 
-        <div className="widget-main simple">
-          <div className="widget-copy">
+        <div className="compact-widget-content-row">
+          <div className="compact-widget-content">
             <strong>{vehicle.shortName}</strong>
             <span>{stageCopy}</span>
             <small>{vehicle.location}</small>
           </div>
-          <span className={`widget-key-state ${stage > 0 && stage < 3 ? 'active' : ''}`}>
-            <Icon name={stage > 0 && stage < 3 ? 'key' : 'clock'} size={18} />
-          </span>
+
+          <button
+            className={`lock-rental-action stage-${stage}`}
+            onClick={(event) => {
+              event.stopPropagation();
+              onAdvanceStage();
+            }}
+            disabled={stage === 3}
+          >
+            <Icon name={rentalActionIcon} size={16} />
+            <span>{rentalActionCopy}</span>
+          </button>
         </div>
 
-        <div className="lock-widget-controls" onClick={(event) => event.stopPropagation()}>
-          <button className={locked ? '' : 'selected'} onClick={onToggleLock}>
-            <Icon name={locked ? 'lock' : 'unlock'} size={19} />
+        <div
+          className="lock-widget-controls compact-controls"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <button
+            className={locked ? '' : 'selected'}
+            onClick={onToggleLock}
+          >
+            <Icon name={locked ? 'lock' : 'unlock'} size={17} />
             <span>{locked ? 'Unlock' : 'Lock'}</span>
           </button>
-          <button className={engine ? 'selected' : ''} onClick={onToggleEngine}>
-            <Icon name="power" size={19} />
+
+          <button
+            className={engine ? 'selected' : ''}
+            onClick={onToggleEngine}
+          >
+            <Icon name="power" size={17} />
             <span>{engine ? 'Stop' : 'Start'}</span>
           </button>
+
           <button onClick={onOpenWallet}>
-            <Icon name="chevron" size={20} />
             <span>Open</span>
+            <Icon name="chevron" size={17} />
           </button>
         </div>
       </section>
-
-      <div className="lock-hint">Tap E-Pass to open in Wallet</div>
 
       {toast && <div className="lock-toast">{toast}</div>}
 
@@ -738,6 +782,7 @@ function App() {
             onToggleLock={toggleLock}
             onToggleEngine={toggleEngine}
             onOpenWallet={() => navigate('wallet')}
+            onAdvanceStage={advanceStage}
             stage={stage}
             toast={toast}
           />
